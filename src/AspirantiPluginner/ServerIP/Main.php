@@ -17,6 +17,8 @@ use pocketmine\plugin\PluginBase;
 use pocketmine\utils\TextFormat;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
+use pocketmine\event\Listener;
+use pocketmine\command\ConsoleCommandSender;
 
 class Main extends PluginBase {
 
@@ -27,5 +29,13 @@ class Main extends PluginBase {
         //posso contemporaneamente salvare l'ip nella property e scriverlo sulla console
         $this->getServer()->getLogger()->info(TextFormat::GRAY . "->" . TextFormat::YELLOW . " IP: " . TextFormat::BLUE . $this->ip = trim(file_get_contents("http://ip-api.com/line/?fields=query")) . TextFormat::YELLOW . " Porta: " . TextFormat::BLUE . $this->getServer()->getPort() . TextFormat::GRAY . " <-");
     }
-    public function onCommand(CommandSender $sender, Command $command, $label, array $args) {
+
+    public function onCommand(CommandSender $sender, Command $command, $label,  array $args) {
+        $cmd = strtolower($command->getName());
+        $ip = trim(file_get_contents("http://ip-api.com/line/?fields=query"));
+        switch ($cmd){
+            case "serverip":
+                $sender->sendMessage(TextFormat::GOLD . "▃▅▆▇▓▒░【" . TextFormat::YELLOW . " IP:$ip" . TextFormat::GOLD . "】░▒▓▇▆▅▃");
+                }
+        }
 }
